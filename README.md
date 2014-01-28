@@ -21,7 +21,11 @@ The only dependency is the very convenient Python library [`requests`](http://do
 Usage
 ---
 
-Three APIs are offered. All API methods have the same name and signature as described in the [cryptsy API specs](https://www.cryptsy.com/pages/api). To access the public API methods:
+Three APIs are offered. All API methods have the same name and signature as described in the [cryptsy API specs](https://www.cryptsy.com/pages/api).
+
+---
+
+To access the public API methods:
 
     import cryptsy.public
 
