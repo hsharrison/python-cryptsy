@@ -50,7 +50,7 @@ def public_request(method, params=None, **kwargs):
     return parsed_response['return']
 
 
-def get_general_market_data(**kwargs):
+def marketdatav2(**kwargs):
     response = public_request('marketdatav2', **kwargs)
     #  Response format: {'markets': {pair: info}
     #    info = {'recenttrades': list of trades: keys=(id, price, quantity, time, total),
@@ -68,13 +68,13 @@ def get_general_market_data(**kwargs):
     return {pair: parse_pair_info(pair, info) for pair, info in response['markets'].items()}
 
 
-def get_single_market_data(market_id, **kwargs):
+def singlemarketdata(market_id, **kwargs):
     response = public_request('singlemarketdata', params={'marketid': market_id}, **kwargs)
     data = response['markets'][list(response['markets'].keys())[0]]
     return parse_pair_info(data['marketid'], data)
 
 
-def get_general_orderbook(**kwargs):
+def orderdata(**kwargs):
     response = public_request('orderdata', **kwargs)
     # Response format: {currency: info}
     #      info.keys() = ['secondarycode',
@@ -88,12 +88,12 @@ def get_general_orderbook(**kwargs):
     return {info['label']: parse_pair_info(info['label'], info) for info in response.values()}
 
 
-def get_single_orderbook(market_id, **kwargs):
+def singleorderdata(market_id, **kwargs):
     response = public_request('orderdata', params={'marketid': market_id}, **kwargs)
     data = response[list(response.keys())[0]]
     return parse_pair_info(data['marketid'], data)
 
 
 def get_market_ids(**kwargs):
-    response = get_general_market_data(**kwargs)
+    response = marketdatav2(**kwargs)
     return {pair: info['marketid'] for pair, info in response.items()}
