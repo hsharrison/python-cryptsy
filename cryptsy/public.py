@@ -12,7 +12,7 @@ from cryptsy.trade import parse_trade_list
 URL = 'http://pubapi.cryptsy.com/api.php'
 
 
-def parse_pair_info(market_id, info):
+def _parse_pair_info(market_id, info):
     if 'recenttrades' in info:
         info['recenttrades'] = parse_trade_list(info['recenttrades'], market_id=market_id)
 
@@ -35,7 +35,7 @@ def parse_pair_info(market_id, info):
         info['marketid'] = int(info['marketid'])
 
 
-def public_request(method, params=None, **kwargs):
+def _public_request(method, params=None, **kwargs):
     if not params:
         params = {}
     params.update(method=method)
@@ -51,7 +51,7 @@ def public_request(method, params=None, **kwargs):
 
 
 def marketdatav2(**kwargs):
-    response = public_request('marketdatav2', **kwargs)
+    response = _public_request('marketdatav2', **kwargs)
     #  Response format: {'markets': {pair: info}
     #    info = {'recenttrades': list of trades: keys=(id, price, quantity, time, total),
     #            'lasttradetime': %Y-%m-%d %H:%M:%S,
@@ -65,17 +65,17 @@ def marketdatav2(**kwargs):
     #            'buyorders': list of orders,
     #            'primaryname': full name of first currency,
     #            'marketid': integer string}
-    return {pair: parse_pair_info(pair, info) for pair, info in response['markets'].items()}
+    return {pair: _parse_pair_info(pair, info) for pair, info in response['markets'].items()}
 
 
 def singlemarketdata(market_id, **kwargs):
-    response = public_request('singlemarketdata', params={'marketid': market_id}, **kwargs)
+    response = _public_request('singlemarketdata', params={'marketid': market_id}, **kwargs)
     data = response['markets'][list(response['markets'].keys())[0]]
-    return parse_pair_info(data['marketid'], data)
+    return _parse_pair_info(data['marketid'], data)
 
 
 def orderdata(**kwargs):
-    response = public_request('orderdata', **kwargs)
+    response = _public_request('orderdata', **kwargs)
     # Response format: {currency: info}
     #      info.keys() = ['secondarycode',
     #                     'primarycode',
@@ -85,13 +85,13 @@ def orderdata(**kwargs):
     #                     'buyorders',
     #                     'primaryname',
     #                     'marketid']
-    return {info['label']: parse_pair_info(info['label'], info) for info in response.values()}
+    return {info['label']: _parse_pair_info(info['label'], info) for info in response.values()}
 
 
 def singleorderdata(market_id, **kwargs):
-    response = public_request('orderdata', params={'marketid': market_id}, **kwargs)
+    response = _public_request('orderdata', params={'marketid': market_id}, **kwargs)
     data = response[list(response.keys())[0]]
-    return parse_pair_info(data['marketid'], data)
+    return _parse_pair_info(data['marketid'], data)
 
 
 def get_market_ids(**kwargs):
