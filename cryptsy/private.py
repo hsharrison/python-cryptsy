@@ -13,9 +13,9 @@ try:
 except ImportError:  # Python3 compatibility
     from urllib.parse import urlencode
 
-from common import COMMON_HEADERS, CryptsyError, DATETIME_FORMAT
-from trade import parse_trade_list
-from order import parse_order_list, Order
+from cryptsy.common import COMMON_HEADERS, CryptsyError, DATETIME_FORMAT
+from cryptsy.trade import parse_trade_list
+from cryptsy.order import parse_order_list, Order
 
 
 URL = 'https://www.cryptsy.com/api'

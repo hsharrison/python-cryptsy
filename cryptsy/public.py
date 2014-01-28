@@ -4,9 +4,9 @@ import requests
 from datetime import datetime
 from decimal import Decimal
 
-from common import COMMON_HEADERS, CryptsyError, DATETIME_FORMAT
-from order import parse_order_list
-from trade import parse_trade_list
+from cryptsy.common import COMMON_HEADERS, CryptsyError, DATETIME_FORMAT
+from cryptsy.order import parse_order_list
+from cryptsy.trade import parse_trade_list
 
 
 URL = 'http://pubapi.cryptsy.com/api.php'

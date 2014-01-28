@@ -3,7 +3,7 @@
 from decimal import Decimal
 from datetime import datetime
 
-from common import DATETIME_FORMAT
+from cryptsy.common import DATETIME_FORMAT
 
 
 def parse_order_list(orders, type_=None, market_id=None):
