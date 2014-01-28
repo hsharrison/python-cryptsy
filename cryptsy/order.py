@@ -43,7 +43,9 @@ class Order(object):
             self.id = None
 
         time_created = kwargs.get('created')
-        if time_created:
+        if isinstance(time_created, datetime):
+            self.time_created = time_created
+        elif time_created:
             self.time_created = datetime.strptime(time_created, DATETIME_FORMAT)
         else:
             self.time_created = None

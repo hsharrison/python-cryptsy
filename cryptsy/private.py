@@ -141,7 +141,8 @@ class AuthenticatedSession(object):
                      price=price,
                      orderid=int(response['orderid']),
                      created=datetime.now(),
-                     orig_quantity=quantity)
+                     orig_quantity=quantity,
+                     total=quantity*price)
 
     def cancelorder(self, order_id):
         response = self.request('cancelorder', params={'orderid': order_id})
