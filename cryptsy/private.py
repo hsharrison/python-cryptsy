@@ -22,16 +22,14 @@ URL = 'https://www.cryptsy.com/api'
 
 
 class AuthenticatedSession(object):
-    def __init__(self, key_handler, key=None, request_kwargs=None):
+    def __init__(self, key_file, request_kwargs=None):
+        with open(key_file, 'rt') as f:
+            key = f.readline().strip()
+            self.secret = f.readline().strip()
+
         self.nonce = 0
         self.session = requests.Session()
         self.session.headers.update(COMMON_HEADERS)
-        if key:
-            self.secret = key_handler.keys[key]
-        else:  # If no key specified, take one from the key_handler.
-            key, secret = list(key_handler.keys.items())[0]
-            self.session.headers.update({'Key': key})
-            self.secret = secret
         self.session.headers.update({'Key': key})
 
         if request_kwargs:
