@@ -96,4 +96,6 @@ def singleorderdata(market_id, **kwargs):
 
 def get_market_ids(**kwargs):
     response = marketdatav2(**kwargs)
-    return {pair: info['marketid'] for pair, info in response.items()}
+    pair_to_id = {pair: info['marketid'] for pair, info in response.items()}
+    id_to_pair = {v: k for k, v in pair_to_id.items()}
+    return id_to_pair, pair_to_id
