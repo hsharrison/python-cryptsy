@@ -33,6 +33,8 @@ def _parse_pair_info(market_id, info):
 
     if 'marketid' in info:
         info['marketid'] = int(info['marketid'])
+        
+    return info
 
 
 def _public_request(method, params=None, **kwargs):
