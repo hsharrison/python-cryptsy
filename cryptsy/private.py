@@ -68,8 +68,9 @@ class AuthenticatedSession(object):
         response = self.request('getinfo')
         response['balances_available'] = {
             currency: Decimal(balance) for currency, balance in response['balances_available'].items()}
-        response['balances_hold'] = {
-            currency: Decimal(balance) for currency, balance in response['balances_hold'].items()}
+        if response['openordercount'] > 0:
+            response['balances_hold'] = {
+                currency: Decimal(balance) for currency, balance in response['balances_hold'].items()}
         response['servertime'] = datetime.fromtimestamp(response['servertimestamp'])
         return response
 
