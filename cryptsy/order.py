@@ -8,7 +8,7 @@ from cryptsy.common import DATETIME_FORMAT
 
 def parse_order_list(orders, type_=None, market_id=None):
     if not type_ and not market_id:
-        return [Order(market_id, **order) for order in orders]
+        return [Order(**order) for order in orders]
     else:
         order_list = []
         for order in orders:
